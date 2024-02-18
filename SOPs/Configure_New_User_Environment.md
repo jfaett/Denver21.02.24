@@ -71,4 +71,3 @@
 
 - Adjust the IDE installation command according to the specific software and your organization's policies.
 - Always verify the application's required port and ensure it does not conflict with other services.
-- Consider creating scripts for these tasks to improve efficiency and consistency across user setups.
