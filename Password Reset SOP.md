@@ -1,5 +1,3 @@
-To enhance the Standard Operating Procedure (SOP) for resetting a user's Red Hat Enterprise Linux (RHEL) password with specific commands, we will include the necessary terminal commands the operations team should run at each relevant step. This detailed guidance ensures that the process is clear and actionable.
-
 ### Standard Operating Procedure (SOP) for Resetting a User's RHEL Password with Commands
 
 #### Objective, Scope, Responsibility, and Time Estimates
