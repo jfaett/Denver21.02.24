@@ -1,0 +1,10 @@
+---
+- name: Restart RHEL server
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Reboot server
+    ansible.builtin.reboot:
+      reboot_timeout: 3600
+  

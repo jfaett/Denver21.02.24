@@ -1,0 +1,19 @@
+---
+- name: User Add
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Add user
+    ansible.builtin.user:
+      name: "{{ _name_ }}"
+      password: "{{ _password_ }}"
+      shell: /bin/bash
+      groups: sudo
+      append: true
+  
+
+
+  
+
+  

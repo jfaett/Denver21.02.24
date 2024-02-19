@@ -1,0 +1,12 @@
+---
+- name: Update service now ticket
+  hosts: ServiceNow.example.com
+  become: true
+
+  tasks:
+  - name: Close service now ticket
+    servicenow.itsm.ticket:
+      sys_id: "{{ ticket_sys_id }}"
+      state: closed
+    register: result
+  

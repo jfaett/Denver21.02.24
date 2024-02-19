@@ -1,0 +1,14 @@
+---
+- name: Update RHEL Server
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Update RHEL Server
+    ansible.builtin.package:
+      name: '*'
+      state: latest
+  
+
+
+
