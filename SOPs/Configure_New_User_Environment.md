@@ -1,73 +1,85 @@
-### Standard Operating Procedure (SOP): Configuring a New User Environment on RHEL
+### SOP for Configuring a New User Environment on RHEL Server
 
-**Objective**: Efficiently configure a new user environment on RHEL, including user creation, password management, application installation, firewall configuration, and server restart.
+#### Purpose:
+To provide a standardized process for the Level 1 Support Operations Team to configure a new user environment on a RHEL server upon receiving a request through the ITSM portal.
 
-**Scope**: Operations team responsible for Level 1 support within an enterprise environment.
+#### Scope:
+This SOP applies to the operations team responsible for managing RHEL servers within an enterprise organization.
 
-**Prerequisites**:
-- Administrative access to the RHEL server.
-- Installation files or repository access for the specified IDE with a web interface.
-- Familiarity with the RHEL command-line interface.
+#### Prerequisites:
+- Access to the ITSM portal.
+- Sudo or root access on the RHEL server.
+- Basic knowledge of Linux commands and server administration.
 
-#### Steps:
+#### Estimated Time: 30 minutes
 
-1. **Add a New User**
-   ```bash
-   sudo adduser newusername
-   ```
-   - Adds a new user to the system.
-   - **Estimated Time**: 2 minutes
+#### Procedure:
 
-2. **Set a Temporary Password**
-   ```bash
-   sudo passwd newusername
-   ```
-   - Assigns a temporary password to the new user. You will be prompted to enter and confirm the password.
-   - **Estimated Time**: 1 minute
+1. **Ticket Receipt and Acknowledgment** (Estimated Time: 2 minutes)
+   - Monitor the ITSM portal for new user configuration requests.
+   - Acknowledge the ticket and take ownership within the ITSM tool.
 
-3. **Force Password Reset on Next Login**
-   ```bash
-   sudo chage -d 0 newusername
-   ```
-   - Forces the user to change their password the next time they log in.
-   - **Estimated Time**: 1 minute
-
-4. **Install an Application (IDE with a Web Interface)**
-   - Before Installation:
+2. **Log into the RHEL Server** (Estimated Time: 3 minutes)
+   - Use SSH to connect to the specified RHEL server.
      ```bash
-     sudo yum update
+     ssh user@your-server-ip
      ```
-     - Updates package lists. This command refreshes repository metadata and ensures your system is up-to-date.
-   
-   - Installation Command:
+   - Ensure you have root privileges or are able to use sudo commands.
+
+3. **Add the New User** (Estimated Time: 5 minutes)
+   - Add a new user account on the server.
      ```bash
-     sudo yum install application-name
+     sudo adduser newusername
      ```
-     - Installs the specified IDE on the user's environment. Replace `application-name` with the actual name of the IDE package.
-   - **Estimated Time**: 5-10 minutes, depending on network speed and application size.
+   - Set or change the user's password.
+     ```bash
+     sudo passwd newusername
+     ```
+   - Follow prompts to enter and confirm the password.
 
-5. **Open a Firewall Port for the Application**
-   ```bash
-   sudo firewall-cmd --zone=public --add-port=port_number/tcp --permanent
-   sudo firewall-cmd --reload
-   ```
-   - Opens the specified port in the firewall for TCP traffic, where `port_number` is the port required by the installed IDE.
-   - **Estimated Time**: 2 minutes
+4. **Update the Server** (Estimated Time: 5 minutes)
+   - Ensure the server's packages are up-to-date.
+     ```bash
+     sudo yum update -y
+     ```
 
-6. **Restart the Server**
-   ```bash
-   sudo reboot
-   ```
-   - Safely restarts the server to ensure all configurations are applied and services start fresh.
-   - **Estimated Time**: 3-5 minutes, depending on the server's hardware and startup processes.
+5. **Install Necessary Applications** (Estimated Time: 5 minutes)
+   - Install applications as requested or required for the new user. Replace `application_name` with the actual application name.
+     ```bash
+     sudo yum install application_name -y
+     ```
 
-#### Post-Procedure Steps:
+6. **Configure Firewall Rules** (Estimated Time: 3 minutes)
+   - Add necessary firewall rules. Adjust the command based on the specific ports or services needed.
+     ```bash
+     sudo firewall-cmd --permanent --add-service=serviceName
+     ```
+   - Reload the firewall to apply the changes.
+     ```bash
+     sudo firewall-cmd --reload
+     ```
 
-- **Verification**: After the server restarts, verify the IDE is accessible through the specified port by attempting to access it from a web browser.
-- **User Notification**: Inform the new user that their environment is set up. Provide them with login instructions and prompt them to change their temporary password.
-- **Documentation**: Document the procedure's completion in the IT support system or documentation platform, including user-specific configuration details.
+7. **Reboot the Server** (Estimated Time: 3 minutes)
+   - Reboot the server to ensure all configurations are applied correctly. This step should be scheduled during a maintenance window to minimize disruption.
+     ```bash
+     sudo reboot
+     ```
+
+8. **Verify the Configuration** (Post-Reboot Check, Estimated Time: 2 minutes)
+   - After the server restarts, log back in and verify the new user environment is configured correctly, and the application(s) are functioning as expected.
+
+9. **Update and Close the Ticket** (Estimated Time: 2 minutes)
+   - Update the ticket in the ITSM portal with the actions taken and the outcome.
+   - Notify the customer through the ITSM tool that the configuration is complete and verify if any further actions are required.
+   - Close the ticket once the customer confirms the setup meets their needs, or according to your organization's policy.
+
+#### Completion:
+The new user environment on the RHEL server is successfully configured, verified, and documented in the ITSM portal. The customer is notified, and the ticket is closed.
+
+#### Documentation:
+- Document each step taken in the ITSM portal, including any issues encountered and their resolutions.
+- Maintain a log of configurations and installations for future reference.
 
 #### Notes:
-
-- Adjust the IDE installation command according to the specific software and your organization's policies.
-- Always verify the application's required port and ensure it does not conflict with other services.
+- Adapt firewall and application installation steps based on the specific requirements of the user or the organization's security policies.
+- Regularly review and update this SOP to incorporate improvements and changes in technology or organizational policies.
