@@ -4,6 +4,6 @@
   become: true
 
   tasks:
-  - name: Restart Firewall
-  
+    - name: Restart Firewall
+
   
