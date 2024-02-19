@@ -1,0 +1,84 @@
+---
+- name: Configure new user env
+  hosts: all
+  become: true
+
+  tasks:
+    # Add user & Set User password always & Update RHEL Server & Install application & Add firewall rules & Restart Firewall & Reboot server & Update a Service Now ticket with new information
+    - name: Add user
+      ansible.builtin.user:
+        name: "{{ _name_ }}"
+        comment: "{{ _comment_ }}"
+        shell: "{{ _shell_ }}"
+        groups: "{{ _groups_ }}"
+        append: true
+        createhome: true
+        home: "{{ _home_ }}"
+        password: "{{ _password_ }}"
+        update_password: "{{ _update_password_ }}"
+      register: user_env_result
+
+    - name: Set User password always
+      ansible.builtin.set_fact:
+        password: "{{ _password_ }}"
+      when: user_env_result.changed
+
+    - name: Update RHEL Server
+      when: ansible_distribution == "RedHat"
+      ansible.builtin.package:
+        name: '*'
+        state: latest
+
+    - name: Install application
+      ansible.builtin.package:
+        name: "{{ _name_ }}"
+        state: present
+      register: install_result
+
+    - name: Add firewall rules
+      ansible.posix.firewalld:
+        port: "{{ item }}"
+        permanent: true
+        state: enabled
+        immediate: true
+      when: ansible_distribution == "RedHat"
+      loop:
+        - "{{ _port_ }}"
+
+    - name: Restart Firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: restarted
+      when: ansible_distribution == "RedHat"
+
+    - name: Reboot server
+      ansible.builtin.reboot:
+        reboot_timeout: 3600
+      when: ansible_distribution == "RedHat"
+
+    - name: Update a Service Now ticket with new information
+      ansible.builtin.uri:
+        url: "{{ _url_ }}"
+        method: POST
+        body_format: json
+        body:
+          incident:
+            number: "{{ _number_ }}"
+            short_description: "{{ _short_description_ }}"
+            description: "{{ _description_ }}"
+            impact: "{{ _impact_ }}"
+            priority: "{{ _priority_ }}"
+            status: "{{ _status_ }}"
+            impact_reason: "{{ _impact_reason_ }}"
+            resolution: "{{ _resolution_ }}"
+            resolution_date: "{{ _resolution_date_ }}"
+            service_level: "{{ _service_level_ }}"
+            service_level_agreement: "{{ _sla_ }}"
+            impact_affected_components: "{{ _impact_affected_components_ }}"
+            impact_affected_users: "{{ _impact_affected_users_ }}"
+            impact_affected_groups: "{{ _impact_affected_groups_ }}"
+            impact_affected_teams: "{{ _impact_affected_teams_ }}"
+            impact_affected_assets: "{{ _impact_affected_assets_ }}"
+    
+    
+    

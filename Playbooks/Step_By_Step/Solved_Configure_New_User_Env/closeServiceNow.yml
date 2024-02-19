@@ -4,7 +4,7 @@
   become: true
 
   tasks:
-  - name: Close service now ticket
+  - name: closes service now ticket
     servicenow.itsm.ticket:
       sys_id: "{{ ticket_sys_id }}"
       state: closed

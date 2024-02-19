@@ -1,0 +1,8 @@
+---
+- name: Install generic application
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Install application
+    
