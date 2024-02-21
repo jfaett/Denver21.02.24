@@ -1,0 +1,7 @@
+---
+- name: Configure new user env
+  hosts: all
+  become: true
+
+  tasks:
+    # Add user & Set User password always & Update RHEL Server & Install application & Add firewall rules & Restart Firewall & Reboot server & Update a Service Now ticket with new information

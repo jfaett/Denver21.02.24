@@ -1,0 +1,7 @@
+---
+- name: exmaple
+  hosts: all
+
+  tasks:
+    #  
+  - name:

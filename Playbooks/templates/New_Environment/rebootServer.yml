@@ -1,0 +1,9 @@
+---
+- name: Reboot RHEL server
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Reboot server
+
+  

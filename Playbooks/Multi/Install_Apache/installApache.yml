@@ -1,0 +1,7 @@
+---
+- name: install Apache
+  hosts: all
+  become: true
+
+  tasks:
+    # Update the rhel server & Install apache & add firewall rules for apache & restart firewall & reboot server & close Servicenow ticket

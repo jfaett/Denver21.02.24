@@ -1,0 +1,9 @@
+---
+- name: Update service now ticket
+  hosts: ServiceNow.example.com
+  become: true
+
+  tasks:
+    - name: closes service now ticket
+    
+  

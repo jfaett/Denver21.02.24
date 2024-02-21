@@ -1,0 +1,17 @@
+---
+- name: User Add
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Add user
+  
+  
+  
+
+  
+
+
+  
+
+  

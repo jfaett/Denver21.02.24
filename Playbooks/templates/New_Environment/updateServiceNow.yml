@@ -1,0 +1,10 @@
+---
+- name: Update service now ticket
+  hosts: ServiceNow.example.com
+  become: true
+
+  tasks:
+    - name: Update a ServiceNow  ticket with new information
+
+
+  

@@ -1,0 +1,9 @@
+---
+- name: Restart firewall
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Restart Firewall
+
+  

@@ -1,0 +1,40 @@
+---
+- name: install Apache
+  hosts: all
+  become: true
+
+  tasks:
+    # Update the rhel server & Install apache & add firewall rules for apache & restart firewall & reboot server & close Servicenow ticket
+    - name: Update the rhel server
+      ansible.builtin.package:
+        name: '*'
+        state: latest
+
+    - name: Install apache
+      ansible.builtin.package:
+        name: httpd
+        state: present
+
+    - name: Add firewall rules for apache
+      ansible.posix.firewalld:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+        immediate: true
+
+    - name: Restart firewall
+      ansible.builtin.service:
+        name: firewalld
+        state: restarted
+
+    - name: Reboot server
+      ansible.builtin.reboot:
+        reboot_timeout: 3600
+
+    - name: Close Servicenow ticket
+      servicenow.itsm.ticket:
+        number: "{{ item }}"
+        state: closed
+      loop:
+        - "{{ servicenow_close_ticket }}"
+    

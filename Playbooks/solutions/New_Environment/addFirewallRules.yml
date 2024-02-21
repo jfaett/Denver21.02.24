@@ -1,0 +1,7 @@
+---
+- name: Add firewall rules
+  hosts: all
+  become: true
+
+  tasks:
+  - name: Add firewall rules
